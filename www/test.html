@@ -1,0 +1,28 @@
+<!doctype html>
+<head>
+<meta charset="utf-8" />
+	<title>Shared Lists</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=10,IE=9,IE=8,IE=edge" />
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<script src="/mscp/js/browser.js"></script>
+	<script src="/mscp/js/jquery.min.js"></script>
+
+	<script>
+  var mscp = new MSCP();
+	$(function() {
+    (async () => {
+      await mscp.init();
+      let bucket = await mscp.GetBucket("123")
+      console.log(bucket)
+    })()
+	});
+
+	</script>
+</head>
+<body>
+
+</body>
+</html>
