@@ -1,238 +1,239 @@
 {
-    "name": "SharedLists",
-    "serve": [
+  "name": "SharedLists",
+  "serve": [
+    {
+      "name": "GetBucket",
+      "description": "",
+      "returntype": "object",
+      "args": [
         {
-            "name": "GetBucket",
-            "description": "",
-            "returntype": "object",
-            "args": [
-                {
-                    "name": "id",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                }
-            ]
-        },
-        {
-            "name": "GetList",
-            "description": "",
-            "returntype": "object",
-            "args": [
-                {
-                    "name": "id",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                }
-            ]
-        },
-        {
-            "name": "RemoveListFromBucket",
-            "description": "",
-            "returntype": "object",
-            "args": [
-                {
-                    "name": "bucketId",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                },
-                {
-                    "name": "listId",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                }
-            ]
-        },
-        {
-            "name": "AddListItem",
-            "description": "",
-            "returntype": "object",
-            "args": [
-                {
-                    "name": "listId",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                },
-                {
-                    "name": "title",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                }
-            ]
-        },
-        {
-            "name": "ToggleListItem",
-            "description": "",
-            "returntype": "object",
-            "args": [
-                {
-                    "name": "listId",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                },
-                {
-                    "name": "itemId",
-                    "type": "integer",
-                    "required": true,
-                    "description": ""
-                }
-            ]
-        },
-        {
-            "name": "ClearCompleted",
-            "description": "",
-            "returntype": "object",
-            "args": [
-                {
-                    "name": "list",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                }
-            ]
-        },
-        {
-            "name": "ChangeListName",
-            "description": "",
-            "returntype": "object",
-            "args": [
-                {
-                    "name": "listId",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                },
-                {
-                    "name": "name",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                }
-            ]
-        },
-        {
-            "name": "ChangeBucketName",
-            "description": "",
-            "returntype": "object",
-            "args": [
-                {
-                    "name": "id",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                },
-                {
-                    "name": "name",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                }
-            ]
-        },
-        {
-            "name": "RenameListItem",
-            "description": "",
-            "returntype": "object",
-            "args": [
-                {
-                    "name": "listId",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                },
-                {
-                    "name": "itemId",
-                    "type": "integer",
-                    "required": true,
-                    "description": ""
-                },
-                {
-                    "name": "name",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                }
-            ]
-        },
-        {
-            "name": "AddListToBucket",
-            "description": "",
-            "returntype": "object",
-            "args": [
-                {
-                    "name": "bucketId",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                },
-                {
-                    "name": "listId",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                }
-            ]
-        },
-        {
-            "name": "GetBucketFull",
-            "description": "",
-            "returntype": "object",
-            "args": [
-                {
-                    "name": "id",
-                    "type": "string",
-                    "required": true,
-                    "description": ""
-                }
-            ]
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": ""
         }
-    ],
-    "dependencies": [
+      ]
+    },
+    {
+      "name": "GetList",
+      "description": "",
+      "returntype": "object",
+      "args": [
         {
-            "name": "get",
-            "args": [
-                {
-                    "name": "key",
-                    "type": "string"
-                },
-                {
-                    "name": "defaultValue",
-                    "type": "*",
-                    "required": false,
-                    "description": ""
-                }
-            ],
-            "namespace": "storage"
-        },
-        {
-            "name": "set",
-            "args": [
-                {
-                    "name": "key",
-                    "type": "string"
-                },
-                {
-                    "name": "value"
-                }
-            ],
-            "namespace": "storage"
-        },
-        {
-            "name": "delete",
-            "args": [
-                {
-                    "name": "key",
-                    "type": "string"
-                }
-            ],
-            "namespace": "storage"
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": ""
         }
-    ],
-    "port": 8081
+      ]
+    },
+    {
+      "name": "RemoveListFromBucket",
+      "description": "",
+      "returntype": "object",
+      "args": [
+        {
+          "name": "bucketId",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "listId",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "AddListItem",
+      "description": "",
+      "returntype": "object",
+      "args": [
+        {
+          "name": "listId",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "ToggleListItem",
+      "description": "",
+      "returntype": "object",
+      "args": [
+        {
+          "name": "listId",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "itemId",
+          "type": "string",
+          "required": true,
+          "description": "",
+          "title": ""
+        }
+      ]
+    },
+    {
+      "name": "ClearCompleted",
+      "description": "",
+      "returntype": "object",
+      "args": [
+        {
+          "name": "list",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "ChangeListName",
+      "description": "",
+      "returntype": "object",
+      "args": [
+        {
+          "name": "listId",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "ChangeBucketName",
+      "description": "",
+      "returntype": "object",
+      "args": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "RenameListItem",
+      "description": "",
+      "returntype": "object",
+      "args": [
+        {
+          "name": "listId",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "itemId",
+          "type": "integer",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "AddListToBucket",
+      "description": "",
+      "returntype": "object",
+      "args": [
+        {
+          "name": "bucketId",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "listId",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "GetBucketFull",
+      "description": "",
+      "returntype": "object",
+      "args": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "get",
+      "args": [
+        {
+          "name": "key",
+          "type": "string"
+        },
+        {
+          "name": "defaultValue",
+          "type": "*",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "namespace": "storage"
+    },
+    {
+      "name": "set",
+      "args": [
+        {
+          "name": "key",
+          "type": "string"
+        },
+        {
+          "name": "value"
+        }
+      ],
+      "namespace": "storage"
+    },
+    {
+      "name": "delete",
+      "args": [
+        {
+          "name": "key",
+          "type": "string"
+        }
+      ],
+      "namespace": "storage"
+    }
+  ],
+  "port": 8081
 }

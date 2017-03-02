@@ -345,7 +345,7 @@ async function refreshList(onlyRefresh){
 
 	var l = cachedLists[curList];
 	if(l){
-		$("#title").html(l.Title);
+		$("#title").html(getUrlVar("title") || l.Title);
 
 		var listItems = localStorage.listsSort === "true" ? l.items.sort((a, b) => (a.Title.toLowerCase() < b.Title.toLowerCase() ? -1 : 1)) : l.items;
 		for(i in listItems){
@@ -462,7 +462,10 @@ function setListMode(){
 	if(curBucket){
 		$("#back").show();
 		$("#removelist").show();
-	}
+	} else {
+    $("#topbar").hide();
+    $("#content").css({top: "0px"})
+  }
 	$("#openbucket").hide();
 	$("#addlist").hide();
 	$("#bottombar").show();

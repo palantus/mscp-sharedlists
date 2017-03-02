@@ -1,12 +1,13 @@
 "use strict"
 
+const uuid = require("node-uuid")
+
 class Handler{
 
   async initFirst(){
     this.global.cachedStorage = {}
     this.global.storageGetPromises = {}
-
-    setInterval(() => this.global.cachedStorage = {}, 120000) //Clear cache every 2 minutes to be on the safe side
+    this.startStorageClearInterval()
   }
 
   async GetBucket(id){
@@ -48,7 +49,7 @@ class Handler{
 
   async AddListItem(listId, title){
     let items = await this.getStorageValue("sharedlists_list_" + listId, [])
-    items.push({id: this.guid(), Title: title, finished: false})
+    items.push({id: uuid.v4(), Title: title, finished: false})
     this.setStorageValue("sharedlists_list_" + listId, items)
     return this.GetList(listId)
   }
@@ -119,20 +120,15 @@ class Handler{
     return value;
   }
 
-  setStorageValue(key, value){
-    this.global.cachedStorage[key] = JSON.stringify(value);
-    this.mscp.storage.set(key, value)
+  startStorageClearInterval(){
+    clearInterval(this.global.cacheClearInterval)
+    this.global.cacheClearInterval = setInterval(() => this.global.cachedStorage = {}, 120000) //Clear cache every 2 minutes to be on the safe side
   }
 
-  s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-               .toString(16)
-               .substring(1);
-  };
-
-  guid() {
-    return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' +
-           this.s4() + '-' + this.s4() + this.s4() + this.s4();
+  setStorageValue(key, value){
+    clearInterval(this.global.cacheClearInterval) //Don't risk clearing cache, before the data is actually written. Otherwise, we might read dirty data (worst case!)
+    this.global.cachedStorage[key] = JSON.stringify(value);
+    this.mscp.storage.set(key, value).then(() => this.startStorageClearInterval())
   }
 }
 
