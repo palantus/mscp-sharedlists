@@ -1,0 +1,12 @@
+{
+  "apps": {
+    "ui": {
+      "title": "Shared lists",
+      "defaultIndex": null,
+      "items": {
+        "": ["GetBucket", "GetBucketFull", "GetList"],
+        "Legacy migration": ["copyLegacyBucket", "copyLegacyList"]
+      }
+    }
+  }
+}
