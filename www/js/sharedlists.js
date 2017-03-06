@@ -12,24 +12,9 @@ var listRefreshId = 0;
 
 var refreshTimer = null;
 
-var lastUpdate = 0;
-var lastUpdateTimer = null;
-
 $(function() {
   mscp.ready.then(init)
 });
-
-function onUpdate(){
-	lastUpdate = new Date().getTime();
-	clearTimeout(lastUpdateTimer);
-	setInterval(function(){
-		var diff = new Date().getTime() - lastUpdate;
-		diff /= 1000;
-		diff = parseInt(diff);
-
-		$("#statustext").html("Last updated " + diff + " seconds ago");
-	}, 1000);
-}
 
 function init(){
 
@@ -279,7 +264,6 @@ async function refreshBucket(onlyRefresh){
 	if(!onlyRefresh){
 		let bucket = await getBucket(curBucket)
     if(bucket != null){
-  		onUpdate();
   		if(JSON.stringify(cachedBuckets[bucket.bucketId]) != JSON.stringify(bucket)){
   			cachedBuckets[bucket.bucketId] = bucket;
   			cacheData();
@@ -332,7 +316,6 @@ async function refreshList(onlyRefresh){
 
 		let list = await getList();
     if(list != null){
-			onUpdate();
 			if(JSON.stringify(cachedLists[list.listId]) != JSON.stringify(list)){
 				if(thisRefreshId < listRefreshId)
 					return;
