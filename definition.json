@@ -12,7 +12,9 @@
           "required": true,
           "description": ""
         }
-      ]
+      ],
+      "title": "Get bucket",
+      "namespace": ""
     },
     {
       "name": "GetList",
@@ -25,7 +27,9 @@
           "required": true,
           "description": ""
         }
-      ]
+      ],
+      "title": "Get list",
+      "namespace": ""
     },
     {
       "name": "RemoveListFromBucket",
@@ -187,6 +191,40 @@
       "args": [
         {
           "name": "id",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "title": "Get bucket (full)",
+      "namespace": ""
+    },
+    {
+      "name": "copyLegacyBucket",
+      "title": "Copy legacy bucket",
+      "description": "",
+      "returntype": "object",
+      "namespace": "",
+      "args": [
+        {
+          "name": "bucketId",
+          "title": "Bucket Id",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "copyLegacyList",
+      "title": "Copy legacy list",
+      "description": "",
+      "returntype": "object",
+      "namespace": "",
+      "args": [
+        {
+          "name": "listId",
+          "title": "List id",
           "type": "string",
           "required": true,
           "description": ""

@@ -106,6 +106,45 @@ class Handler{
       return bucket;
   }
 
+  async copyLegacyBucket(bucketId){
+    let requestData = {module: "sharedlists", message: {action: "GetBucket", bucketId: bucketId}}
+    let bucket = await this.mscp._request({
+          url: "https://ahkpro.dk/request",
+          method: "POST",
+          headers: {
+              "content-type": "application/json",
+          },
+          json: requestData
+        })
+
+    await this.ChangeBucketName(bucket.bucketId, bucket.Title)
+    for(let l of bucket.lists){
+      await this.copyLegacyList(l.id)
+      await this.AddListToBucket(bucketId, l.id)
+    }
+
+    return this.GetBucket(bucketId);
+  }
+
+  async copyLegacyList(listId){
+    let requestData = {module: "sharedlists", message: {action: "GetList", listId: listId}}
+    let list = await this.mscp._request({
+          url: "https://ahkpro.dk/request",
+          method: "POST",
+          headers: {
+              "content-type": "application/json",
+          },
+          json: requestData
+        })
+    await this.ChangeListName(listId, list.Title)
+    let items = []
+    for(let i of list.items){
+      items.push({id: uuid.v4(), Title: i.Title, finished: i.finished})
+    }
+    this.setStorageValue("sharedlists_list_" + listId, items)
+    return this.GetList(listId)
+  }
+
   async getStorageValue(key, defaultValue){
     let promise = this.global.storageGetPromises[key]
     if(promise !== undefined)
