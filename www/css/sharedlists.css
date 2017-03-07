@@ -46,7 +46,7 @@ button:hover{background-color:#f5f5f5; cursor: pointer;}
 
 /* table */
 #maintable{margin-top: 20px; width: 95%; border-spacing:0; box-shadow: -1px 3px 3px #aaa;  margin-left: auto; margin-right: auto;}
-#maintable th{background-color: #333333;border-radius: 5px 5px 0px 0px;color: white;}
+#maintable th{background-color: #333333;border-radius: 5px 5px 0px 0px;color: white; font-weight: normal;}
 #maintable tr:hover{cursor: pointer}
 #maintable td{
 	background: -webkit-linear-gradient(top, #ffffff, #eeeeee);
