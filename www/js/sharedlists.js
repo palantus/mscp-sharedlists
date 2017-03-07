@@ -448,6 +448,7 @@ function setListMode(){
 	} else {
     $("#topbar").hide();
     $("#content").css({top: "0px"})
+    $("#maintable").css({"margin-top": "10px"})
   }
 	$("#openbucket").hide();
 	$("#addlist").hide();
