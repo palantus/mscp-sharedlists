@@ -153,9 +153,10 @@
         },
         {
           "name": "itemId",
-          "type": "integer",
+          "type": "string",
           "required": true,
-          "description": ""
+          "description": "",
+          "title": ""
         },
         {
           "name": "name",
