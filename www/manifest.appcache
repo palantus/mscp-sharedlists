@@ -1,12 +1,12 @@
 CACHE MANIFEST
-#VERSION 159
+#VERSION 160
 
 /index.html
 
-/js/jquery.min.js
-/js/jquery.cookie.js
-/js/jquery.detectswipe.js
-/js/jquery.longpress.js
+/mscp/libs/js/jquery.min.js
+/mscp/libs/js/jquery.cookie.js
+/mscp/libs/js/jquery.detectswipe.js
+/mscp/libs/js/jquery.longpress.js
 
 /js/sharedlists.js
 /css/sharedlists.css

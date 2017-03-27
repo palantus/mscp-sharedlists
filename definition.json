@@ -231,6 +231,22 @@
           "description": ""
         }
       ]
+    },
+    {
+      "name": "UncompleteAll",
+      "title": "Uncomplete all",
+      "description": "",
+      "returntype": "object",
+      "namespace": "",
+      "args": [
+        {
+          "name": "id",
+          "title": "List id",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ]
     }
   ],
   "dependencies": [

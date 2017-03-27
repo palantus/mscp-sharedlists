@@ -95,3 +95,22 @@ div.pctopdiv{
 	text-align: center;
 	margin-top: 10px;
 }
+
+
+div.popup{
+  display: none;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+div.popup > div{
+  position: relative; width: 90%; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;
+}
+
+#newitemtitle{width: 100%;  border: 1px solid #ccc; border-radius: 3px; overflow: hidden; background: #fafafa; padding:3px; font-size: 100%; margin-bottom: 5px;}
+#additionalfunctions > div > button:not(:first-child){margin-top: 5px;}

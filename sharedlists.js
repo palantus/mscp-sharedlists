@@ -64,13 +64,23 @@ class Handler{
     return this.GetList(listId)
   }
 
-  async ClearCompleted(listId){
+  async UncompleteAll(listId){
     let items = await this.getStorageValue("sharedlists_list_" + listId, [])
     for(let i = 0; i < items.length; i++){
-      if(items[i].finished)
-        items.splice(i, 1)
+      items[i].finished = false
     }
     this.setStorageValue("sharedlists_list_" + listId, items)
+    return this.GetList(listId)
+  }
+
+  async ClearCompleted(listId){
+    let items = await this.getStorageValue("sharedlists_list_" + listId, [])
+    let newItems = []
+    for(let i = 0; i < items.length; i++){
+      if(!items[i].finished)
+        newItems.push(items[i])
+    }
+    this.setStorageValue("sharedlists_list_" + listId, newItems)
     return this.GetList(listId)
   }
 

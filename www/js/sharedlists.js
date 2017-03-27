@@ -1,16 +1,12 @@
-/*
-	TODO:
-*/
 var isListMode = false;
 var curBucket = "";
 var curList = "";
-
 var cachedBuckets = {};
 var cachedLists = {};
-
 var listRefreshId = 0;
-
 var refreshTimer = null;
+var curBucketJSON = null;
+var curListJSON = null;
 
 $(function() {
   mscp.ready.then(init)
@@ -68,7 +64,7 @@ function init(){
 
 function initFunctionality(){
 
-	$(document).keydown(function(e){
+	$(document).keyup(function(e){
 		var focusElement = $(":focus");
 		if(focusElement.length > 0 && (focusElement[0].nodeName == "TEXTAREA" || focusElement[0].nodeName == "INPUT"))
 			return;
@@ -151,72 +147,28 @@ function initFunctionality(){
 	});
 
 	$("#additem").click(function(){
-		/*
-		var newTitle = prompt("Enter a title for the new item:");
-		if(newTitle){
-			request({module: "sharedlists", message: {action: "AddListItem", bucketId: curBucket, listId: curList, Title: newTitle}}, function(res){
-				$("#offline").hide();
-				cachedLists[res.list.listId] = res.list;
-				cacheData();
-				refreshList(true);
-			}, function(){$("#offline").show();});
-		}
-		*/
-
-		var popupCreator = new PopupCreator();
-		popupCreator.init({
-			title: "Add Item",
-			content: "Enter a title for the new item:"
-						+ "<br/>"
-						+ "<textarea style='width: " + (isMobileOrNarrow() ? "100%" : "400px") + "; height: 70px; display: block;'></textarea>"
-						+ "<div id='errormessage' style='color:red;display:none;'>Maximum length of an item is 200 characters.</div>"
-						+ "<button id='ok' style=''>Add</button>"
-						+ "<button id='cancel'>Cancel</button>",
-			maximize: isMobileOrNarrow(),
-			onShow: function(){
-				var t = this;
-				this.element.find("textarea").focus();
-
-				this.element.find("textarea").keydown(function(e){
-					if(e.which == 13){
-						t.element.find("#ok").click();
-					}
-				});
-
-				this.element.find("#ok").click(function(){
-					var newTitle = t.element.find("textarea").val();
-					t.element.find("#errormessage").hide();
-					if(newTitle && newTitle.length > 200){
-						t.element.find("#errormessage").height(t.element.find("textarea").outerHeight());
-						t.element.find("#errormessage").show();
-						t.element.find("textarea").hide();
-						setTimeout(function(){
-							t.element.find("#errormessage").hide();
-							t.element.find("textarea").show();
-						}, 2000);
-					}
-					else if(newTitle){
-						t.close();
-            mscp.AddListItem(curList, newTitle).then((list) => {
-              if(list != null){
-  							$("#offline").hide();
-  							cachedLists[list.listId] = list;
-  							cacheData();
-  							refreshList(true);
-              } else {
-                $("#offline").show();
-              }
-						})
-					}
-				});
-				this.element.find("#cancel").click(function(){
-					t.close();
-				});
-			}
-		});
-		popupCreator.show();
-
+    $("#newitemtitle").val("");
+    $("#newitem").fadeIn("fast", () => $("#newitemtitle").focus());
 	});
+
+  $("#newitem").click(e => {if(e.target.id == "newitem") $("#newitem").fadeOut("fast")})
+  $("#newitem .ok").click(e => {
+    mscp.AddListItem(curList, $("#newitemtitle").val()).then((list) => {
+      if(list != null){
+        $("#offline").hide();
+        cachedLists[list.listId] = list;
+        cacheData();
+        refreshList(true);
+      } else {
+        $("#offline").show();
+      }
+    })
+    $("#newitem").fadeOut("fast")
+  })
+  $("#newitem .cancel").click(e => $("#newitem").fadeOut("fast"));
+  $("#newitemtitle").keydown(e => {if(e.which == 13) $("#newitem .ok").click();});
+
+  $("body").keydown(e => {if(e.which == 27) $("div.popup").fadeOut("fast")})
 
 	$("#addlist").click(async function(){
 		var id = prompt("Enter a list ID if you want to open a specific list or nothing if you want to create a new:");
@@ -251,15 +203,27 @@ function initFunctionality(){
 		else
 			prompt("Use this to copy bucket ID:", curBucket);
 	});
+
+  $("#showfunctions").click(() => {$("#additionalfunctions").fadeIn("fast"); $("#additionalfunctions button:first-child").focus();});
+  $("#uncomplete").click(() => {
+    mscp.UncompleteAll(curList).then((list) => {
+      if(list != null){
+        $("#offline").hide();
+        cachedLists[list.listId] = list;
+        cacheData();
+        refreshList(true);
+      } else {
+        $("#offline").show();
+      }
+    })
+    $("#additionalfunctions").fadeOut("fast");
+  })
+  $("#backup").click(() => {backup(); $("#additionalfunctions").fadeOut("fast");});
 }
 
 async function refreshBucket(onlyRefresh){
 	if(isListMode)
 		return;
-
-	$("#title").html("");
-	tab = $("#maintable tbody");
-	tab.empty();
 
 	if(!onlyRefresh){
 		let bucket = await getBucket(curBucket)
@@ -269,10 +233,18 @@ async function refreshBucket(onlyRefresh){
   			cacheData();
   		}
     }
+    if(JSON.stringify(bucket) == curBucketJSON){
+      return; //No changes
+    }
 	}
+
+	$("#title").html("");
+	tab = $("#maintable tbody");
+	tab.empty();
 
 	var b = cachedBuckets[curBucket];
 	if(b){
+    curBucketJSON = JSON.stringify(b)
 		$("#title").html(b.Title);
 		var bucketLists = b.lists.sort(function(a, b){return a.Title.toLowerCase() > b.Title.toLowerCase() ? 1 : -1;});
 		for(i in bucketLists){
@@ -288,14 +260,6 @@ async function refreshBucket(onlyRefresh){
 				setListMode();
 			});
 
-			/*
-			tr.swipe( {
-        		tap:function(event, direction, distance, duration, fingerCount) {
-        			var list = $(this).data("list");
-					curList = list.id;
-					setListMode();
-        		}});
-			*/
 			tr.append(td);
 			tab.append(tr);
 		}
@@ -306,9 +270,6 @@ async function refreshList(onlyRefresh){
 	if(!isListMode)
 		return;
 
-	$("#title").html("");
-	tab = $("#maintable tbody");
-	tab.empty();
 
 	if(!onlyRefresh){
 		listRefreshId++;
@@ -324,10 +285,18 @@ async function refreshList(onlyRefresh){
 				cacheData();
 			}
 		}
+    if(JSON.stringify(list) == curListJSON){
+      return; //No changes
+    }
 	}
+
+	$("#title").html("");
+	tab = $("#maintable tbody");
+	tab.empty();
 
 	var l = cachedLists[curList];
 	if(l){
+    curListJSON = JSON.stringify(l)
 		$("#title").html(getUrlVar("title") || l.Title);
 
 		var listItems = localStorage.listsSort === "true" ? l.items.sort((a, b) => (a.Title.toLowerCase() < b.Title.toLowerCase() ? -1 : 1)) : l.items;
