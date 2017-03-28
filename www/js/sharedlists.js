@@ -151,7 +151,6 @@ function initFunctionality(){
     $("#newitem").fadeIn("fast", () => $("#newitemtitle").focus());
 	});
 
-  $("#newitem").click(e => {if(e.target.id == "newitem") $("#newitem").fadeOut("fast")})
   $("#newitem .ok").click(e => {
     mscp.AddListItem(curList, $("#newitemtitle").val()).then((list) => {
       if(list != null){
@@ -169,6 +168,10 @@ function initFunctionality(){
   $("#newitemtitle").keydown(e => {if(e.which == 13) $("#newitem .ok").click();});
 
   $("body").keydown(e => {if(e.which == 27) $("div.popup").fadeOut("fast")})
+  $("div.popup").click(e => {
+    if($(e.target).is("div"))
+      $("div.popup").fadeOut("fast");
+  })
 
 	$("#addlist").click(async function(){
 		var id = prompt("Enter a list ID if you want to open a specific list or nothing if you want to create a new:");
