@@ -127,10 +127,7 @@ function initFunctionality(){
 	$("#sort").click(function(){
 		if(isListMode){
       localStorage.listsSort = localStorage.listsSort !== undefined ? (localStorage.listsSort == "false" ? "true" : "false") : "true";
-			refreshList();
-    } else {
-      localStorage.bucketsSort = localStorage.bucketsSort !== undefined ? (localStorage.bucketsSort == "false" ? "true" : "false") : "true";
-			refreshBucket();
+			refreshList(true);
     }
 	});
 
@@ -250,11 +247,11 @@ async function refreshBucket(onlyRefresh){
     curBucketJSON = JSON.stringify(b)
 		$("#title").html(b.Title);
 		var bucketLists = b.lists.sort(function(a, b){return a.Title.toLowerCase() > b.Title.toLowerCase() ? 1 : -1;});
-		for(i in bucketLists){
+		for(let list of bucketLists){
 			var tr = $("<tr/>");
 			var td = $("<td/>");
-			td.html(bucketLists[i].Title);
-			tr.data("list", bucketLists[i]);
+			td.html(list.Title);
+			tr.data("list", list);
 
 
 			tr.click(function(){
@@ -272,7 +269,6 @@ async function refreshBucket(onlyRefresh){
 async function refreshList(onlyRefresh){
 	if(!isListMode)
 		return;
-
 
 	if(!onlyRefresh){
 		listRefreshId++;
@@ -301,20 +297,19 @@ async function refreshList(onlyRefresh){
 	if(l){
     curListJSON = JSON.stringify(l)
 		$("#title").html(getUrlVar("title") || l.Title);
-
-		var listItems = localStorage.listsSort === "true" ? l.items.sort((a, b) => (a.Title.toLowerCase() < b.Title.toLowerCase() ? -1 : 1)) : l.items;
-		for(i in listItems){
+    let listItems = localStorage.listsSort === "true" ? JSON.parse(JSON.stringify(l.items)).sort((a, b) => (a.Title.toLowerCase() < b.Title.toLowerCase() ? -1 : 1)) : l.items;
+		for(let item of listItems){
 			var tr = $("<tr/>");
 
 			var td = $("<td/>", {class:"completedcheckbox"});
-			td.append(listItems[i].finished? "&#10004;" : "&nbsp;");
+			td.append(item.finished? "&#10004;" : "&nbsp;");
 			tr.append(td);
 
 			td = $("<td/>");
-			td.append(listItems[i].Title);
+			td.append(item.Title);
 			tr.append(td);
 
-			tr.data("item", listItems[i]);
+			tr.data("item", item);
 
 			tr.click(async function(){
 				clearTimeout(refreshTimer);
