@@ -41,7 +41,7 @@ body{
 #topright{position: absolute; right: 5px; top: 5px;z-index: 2;}
 #bottomleft{margin-top: 5px; margin-left: 5px;}
 
-button{height: 28px;font-size: 100%;background-color:#FFF;border:1px solid #dedede;padding-bottom:4px;padding-left: 10px;padding-right: 10px; padding-top: 4px; margin: 0px; border-radius: 4px 4px 4px 4px;}
+button{height: 28px; font-size: 100%;background-color:#FFF;border:1px solid #dedede;/*padding-bottom:4px;*/padding-left: 10px;padding-right: 10px; /*padding-top: 4px;*/ margin: 0px; border-radius: 4px 4px 4px 4px;}
 button:hover{background-color:#f5f5f5; cursor: pointer;}
 
 /* table */
