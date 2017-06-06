@@ -64,6 +64,7 @@ button:hover{background-color:#f5f5f5; cursor: pointer;}
 span.listitemcompleted{float: left; width: 30px;}
 span.listitemname{float: left;;}
 #maintable td.completedcheckbox{width: 17px;}
+#maintable td:last-child {padding-right: 5px;}
 
 
 
