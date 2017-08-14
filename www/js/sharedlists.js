@@ -420,6 +420,7 @@ function setListMode(){
 	$("#openbucket").hide();
 	$("#addlist").hide();
 	$("#bottombar").show();
+  curListJSON = null;
 	refreshList();
 }
 
@@ -431,6 +432,7 @@ function setBucketMode(){
 	$("#openbucket").show();
 	$("#addlist").show();
 	$("#bottombar").hide();
+  curBucketJSON = null;
 	refreshBucket();
 }
 
