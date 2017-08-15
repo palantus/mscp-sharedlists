@@ -115,3 +115,9 @@ div.popup > div{
 
 #newitemtitle{width: 100%;  border: 1px solid #ccc; border-radius: 3px; overflow: hidden; background: #fafafa; padding:3px; font-size: 100%; margin-bottom: 5px;}
 #additionalfunctions > div > button:not(:first-child){margin-top: 5px;}
+
+
+/* Dragging */
+td.grab { cursor: grab; width: 10px;}
+.grabbed { box-shadow: 0 0 13px #000; }
+.grabCursor, .grabCursor * { cursor: grabbing !important; }

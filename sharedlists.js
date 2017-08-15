@@ -64,6 +64,19 @@ class Handler{
     return this.GetList(listId)
   }
 
+  async MoveItemToIndex(listId, itemId, index){
+    let items = await this.getStorageValue("sharedlists_list_" + listId, [])
+    for(let i = 0; i < items.length; i++){
+      if(items[i].id == itemId && !isNaN(index) && index >= 0 && index < items.length){
+        var tmp = items[index]
+        items[index] = items[i]
+        items[i] = tmp
+      }
+    }
+    this.setStorageValue("sharedlists_list_" + listId, items)
+    return this.GetList(listId)
+  }
+
   async UncompleteAll(listId){
     let items = await this.getStorageValue("sharedlists_list_" + listId, [])
     for(let i = 0; i < items.length; i++){

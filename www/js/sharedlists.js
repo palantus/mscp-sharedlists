@@ -309,10 +309,19 @@ async function refreshList(onlyRefresh){
 			td.append(item.Title);
 			tr.append(td);
 
+			td = $("<td/>", {class:"grab"});
+			td.append("&#9776;");
+			tr.append(td);
+
 			tr.data("item", item);
 
-			tr.click(async function(){
+			tr.mouseup(async function(e){
 				clearTimeout(refreshTimer);
+
+        var test = $(".grabbed");
+
+        if($(".grabbed").length > 0)
+          return;
 
 				var item = $(this).data("item");
 				item.finished = !item.finished;
@@ -345,6 +354,10 @@ async function refreshList(onlyRefresh){
 
 			tab.append(tr);
 		}
+
+    makeItemsMovable(async function(item, index){
+      await mscp.MoveItemToIndex(curList, item.id, index)
+    })
 	}
 }
 
@@ -457,6 +470,42 @@ function saveAs(uri, filename) {
   } else {
     window.open(uri);
   }
+}
+
+function makeItemsMovable(callback){
+  $(".grab").mousedown(function (e) {
+    var tr = $(e.target).closest("TR"), si = tr.index(), sy = e.pageY, b = $(document.body), drag;
+
+    b.addClass("grabCursor").css("userSelect", "none");
+    tr.addClass("grabbed");
+    function move (e) {
+        if (!drag && Math.abs(e.pageY - sy) < 10)
+          return;
+        drag = true;
+        tr.siblings().each(function() {
+            var s = $(this), i = s.index(), y = s.offset().top;
+            if (i >= 0 && e.pageY >= y && e.pageY < y + s.outerHeight()) {
+                if (i < tr.index())
+                    s.insertAfter(tr);
+                else
+                    s.insertBefore(tr);
+                return false;
+            }
+        });
+    }
+    function up (e) {
+        if (drag && si != tr.index()) {
+            drag = false;
+            callback(tr.data("item"), tr.index());
+        }
+        $(document).unbind("mousemove", move).unbind("mouseup", up);
+        b.removeClass("grabCursor").css("userSelect", "none");
+        tr.removeClass("grabbed");
+        e.stopPropagation();
+    }
+    $(document).mousemove(move).mouseup(up);
+    e.stopPropagation();
+  });
 }
 
 function backup(){

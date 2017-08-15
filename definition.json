@@ -247,6 +247,36 @@
           "description": ""
         }
       ]
+    },
+    {
+      "name": "MoveItemToIndex",
+      "title": "",
+      "description": "",
+      "returntype": "object",
+      "namespace": "",
+      "args": [
+        {
+          "name": "listId",
+          "title": "",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "itemId",
+          "title": "",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "index",
+          "title": "",
+          "type": "integer",
+          "required": true,
+          "description": ""
+        }
+      ]
     }
   ],
   "dependencies": [
