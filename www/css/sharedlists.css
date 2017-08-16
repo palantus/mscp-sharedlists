@@ -118,6 +118,6 @@ div.popup > div{
 
 
 /* Dragging */
-td.grab { cursor: grab; width: 10px;}
-.grabbed { box-shadow: 0 0 13px #000; }
-.grabCursor, .grabCursor * { cursor: grabbing !important; }
+#maintable td.grab { cursor: grab; cursor: -webkit-grab; width: 10px;}
+#maintable .grabbed { box-shadow: 0 0 13px #000; }
+#maintable .grabCursor, .grabCursor * { cursor: grabbing !important; cursor: -webkit-grabbing !important;}
