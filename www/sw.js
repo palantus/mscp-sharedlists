@@ -37,11 +37,13 @@ self.addEventListener('fetch', function(event) {
         // and serve second one
         let responseClone = response.clone();
 
-        caches.open('v1').then(function (cache) {
-          try{
-            cache.put(event.request, responseClone);
-          } catch(err){}
-        });
+        if(event.request.method == "GET"){
+          caches.open('v1').then(function (cache) {
+            try{
+              cache.put(event.request, responseClone);
+            } catch(err){}
+          });
+        }
         return response;
       }).catch(async function (e) {
         return new Response(JSON.stringify({success: false, error: "Offline", offline: true}))
