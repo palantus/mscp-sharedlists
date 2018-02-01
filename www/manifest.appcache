@@ -1,24 +1,6 @@
 CACHE MANIFEST
-#VERSION 171
+NETWORK:
+*
 
-/index.html
-
-/mscp/libs/js/jquery.min.js
-/mscp/libs/js/jquery.cookie.js
-/mscp/libs/js/jquery.detectswipe.js
-/mscp/libs/js/jquery.longpress.js
-
-/js/sharedlists.js
-/css/sharedlists.css
-
-/mscp/libs/js/popupcreator.js
-/mscp/libs/css/popupcreator.css
-
-/mscp/js/browser.js
-
-/mscp/libs/img/min.png
-/mscp/libs/img/max.png
-/mscp/libs/img/windowed.png
-/mscp/libs/img/close.png
-/img/checklist_128.png
-/img/checklist_196.png
+CACHE:
+FALLBACK:
